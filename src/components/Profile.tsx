@@ -1,7 +1,33 @@
 import React from "react";
+import { User, UserAttribute } from "../model/Model";
+import { Link } from "react-router-dom";
+import { AuthService } from "../services/AuthService";
 
-export class Profile extends React.Component {
+interface ProfileState {
+  userAttributes: UserAttribute[];
+}
+interface ProfileProps {
+  user: User | undefined;
+  authService: AuthService;
+}
+export class Profile extends React.Component<ProfileProps, ProfileState> {
   render() {
-    return <div>Welcome ti the profile page!</div>;
+    let profileSpace;
+    if (this.props.user) {
+      profileSpace = <h3>Hello {this.props.user.userName}</h3>;
+    } else {
+      profileSpace = (
+        <div>
+          <Link to="login">Login</Link>
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        Welcome to the profile page!
+        {profileSpace}
+      </div>
+    );
   }
 }
